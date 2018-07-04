@@ -1,0 +1,248 @@
+
+// @mixin border-top-1px($color) {
+//   position: relative;
+
+//   &:after {
+//     display: block;
+//     position: absolute;
+//     left: 0;
+//     // 下边框使用bottom: 0 ,上边框使用top: 0
+//     top: 0;
+//     width: 100%;
+//     border-top: 1px solid $color;
+//     content: ' ';
+//   }
+// }
+// @mixin border-bottom-1px($color) {
+//   position: relative;
+
+//   &:after {
+//     display: block;
+//     position: absolute;
+//     left: 0;
+//     // 下边框使用bottom: 0 ,上边框使用top: 0
+//     bottom: 0;
+//     width: 100%;
+//     border-top: 1px solid $color;
+//     content: ' ';
+//   }
+// }
+// @mixin border-left-1px($color) {
+//   position: relative;
+
+//   &:after {
+//     display: block;
+//     position: absolute;
+//     left: 0;
+//     top: 0;
+//     width: 1px;
+//     bottom: 0;
+//     width: 100%;
+//     border-left: 1px solid $color;
+//     transform: scaleX(0.5);
+//     transform-origin: 0 0;
+//     content: ' ';
+//   }
+// }
+// @mixin border-right-1px($color) {
+//   position: relative;
+
+//   &:after {
+//     display: block;
+//     position: absolute;
+//     left: 0;
+//     top: 0;
+//     width: 1px;
+//     bottom: 0;
+//     width: 100%;
+//     border-right: 1px solid $color;
+//     transform: scaleX(0.5);
+//     transform-origin: 0 0;
+//     content: ' ';
+//   }
+// }
+
+@mixin border-1px($color:#000, $radious:0) {
+  position: relative;
+
+  &:after {
+    content: " ";
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 1px solid $color;
+    border-radius: $radious;
+    // 设置元素同行显示，有用？
+    // -webkit-box-sizing: border-box;
+    // box-sizing: border-box;
+  }
+}
+@mixin border-top-1px($color:#000) {
+  position: relative;
+
+  &:after {
+    content: " ";
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-top: 1px solid $color;
+  }
+}
+@mixin border-bottom-1px($color:#000) {
+  position: relative;
+
+  &:after {
+    content: " ";
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-bottom: 1px solid $color;
+  }
+}
+@mixin border-left-1px($color:#000) {
+  position: relative;
+
+  &:after {
+    content: " ";
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-left: 1px solid $color;
+  }
+}
+@mixin border-right-1px($color:#000) {
+  position: relative;
+
+  &:after {
+    content: " ";
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-right: 1px solid $color;
+  }
+}
+
+// 用于取消一像素效果
+@mixin border-none() {
+  &:after {
+    display: none;
+  }
+}
+
+// 判断不同的dpr进行竖直方向上的缩放
+@media (-webkit-max-device-pixel-ratio: 1.5), (max-device-pixel-ratio: 1.5) {
+  .border-1px {
+    &::after {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+@media (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5) {
+  .border-1px {
+    &::after {
+      width: 143%;
+      height: 143%;
+      -webkit-transform: scale(.7);
+      transform: scale(.7);
+      -webkit-transform-origin: 0 0;
+      transform-origin: 0 0;
+    }
+  }
+}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-device-pixel-ratio: 2) {
+  .border-1px {
+    &::after {
+      width: 200%;
+      height: 200%;
+      -webkit-transform: scale(.5);
+      transform: scale(.5);
+      -webkit-transform-origin: 0 0;
+      transform-origin: 0 0;
+    }
+  }
+}
+
+@media (-webkit-min-device-pixel-ratio: 3), (min-device-pixel-ratio: 3) {
+  .border-1px {
+    &::after {
+      width: 303%;
+      height: 303%;
+      -webkit-transform: scale(.33);
+      transform: scale(.33);
+      -webkit-transform-origin: 0 0;
+      transform-origin: 0 0;
+    }
+  }
+}
+
+// 注：使用此1px边框需要给应用到的那个DOM元素加 .border-top-1px 或 .border-bottom-1px 这个class名
+// 例如：<li class='item-li border-top-1px'>message</li>
+// 在css中写： .item-li { border-top-1px(red) }
+// 对某个特殊元素取消此样式：.item-li { border-none() }
+
+// 对文字字号的适配 
+@mixin font-size($font-size:24px) {
+  @media screen and (max-device-width: 290px) {
+    font-size: round($font-size * 0.70);
+  }
+  @media screen and (max-device-width: 306px) and (min-device-width: 291px) {
+    font-size: round($font-size * 0.74);
+  }
+  @media screen and (max-device-width: 323px) and (min-device-width: 307px) {
+    font-size: round($font-size * 0.78);
+  }
+  @media screen and (max-device-width: 340px) and (min-device-width: 324px) {
+    font-size: round($font-size * 0.82);
+  }
+  @media screen and (max-device-width: 356px) and (min-device-width: 341px) {
+    font-size: round($font-size * 0.86);
+  }
+  @media screen and (max-device-width: 372px) and (min-device-width: 357px) {
+    font-size: round($font-size * 0.90);
+  }
+  @media screen and (max-device-width: 389px) and (min-device-width: 373px) {
+    font-size: round($font-size * 0.94);
+  }
+  @media screen and (max-device-width: 406px) and (min-device-width: 390px) {
+    font-size: round($font-size * 0.98);
+  }
+  @media screen and (max-device-width: 422px) and (min-device-width: 407px) {
+    font-size: round($font-size);
+    color: red;
+    [data-dpr="3"] & {
+      color: blue;
+    }
+  }
+  @media screen and (max-device-width: 439px) and (min-device-width: 423px) {
+    font-size: round($font-size * 1.02);
+  }
+  @media screen and (max-device-width: 455px) and (min-device-width: 440px) {
+    font-size: round($font-size * 1.06);
+  }
+  @media screen and (max-device-width: 472px) and (min-device-width: 456px) {
+    font-size: round($font-size * 1.10);
+  }
+  @media screen and (max-device-width: 488px) and (min-device-width: 473px) {
+    font-size: round($font-size * 1.14);
+  }
+  @media screen and (max-device-width: 505px) and (min-device-width: 489px) {
+    font-size: round($font-size * 1.18);
+  }
+  @media screen and (min-device-width: 506px) {
+    font-size: round($font-size * 1.22);
+  }
+}
+
+// 使用时：用font-size() 代替font-size属性 ，font-dpr()中字体大小为 dpr==1 时的文字大小
+
+// 对不同dpr设备上不同的背景图，用图片命名后缀区分
+@mixin bg-image($url) {
+  background-image: url($url+'@2x.png');
+
+  @media (-webkit-min-device-pixel-ratio: 3), (min-device-pixel-ratio: 3) {
+    background-image: url($url+'@3x.png');
+  }
+}

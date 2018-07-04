@@ -1,0 +1,62 @@
+// 一像素线的实现原理： 在某元素后跟上一个内容只有1px边框的元素
+border-1px($color)
+  position: relative
+  &:after
+    display: block
+    position: absolute
+    left: 0
+    bottom: 0
+    width: 100%
+    border-top: 1px solid $color
+    content: ' '
+
+// 用于取消一像素效果
+border-none()
+  &:after
+    display: none
+
+// 判断不同的dpr进行竖直方向上的缩放
+@media (-webkit-min-device-pixel-ratio: 1.5),(min-device-pixel-ratio: 1.5)
+  .border-1px
+    &::after
+      -webkit-transform: scaleY(0.7)
+      transform: scaleY(0.7)
+
+@media (-webkit-min-device-pixel-ratio: 2),(min-device-pixel-ratio: 2)
+  .border-1px
+    &::after
+      border-color: red
+      -webkit-transform: scaleY(0.5)
+      transform: scaleY(0.5)
+
+@media (-webkit-min-device-pixel-ratio: 3),(min-device-pixel-ratio: 3)
+  .border-1px
+    &::after
+      border-color: red
+      -webkit-transform: scaleY(0.3)
+      transform: scaleY(0.3)
+
+// 注：使用此1px边框需要给应用到的那个DOM元素加 border-1px 这个class名
+// 例如：<li class='item-li border-1px'>message</li>
+//       在css中写： .item-li { border-1px(red) }
+//       取消：.item-li { border-none() }
+
+
+
+// 对文字字号的适配 单纯的媒体查询 或使用data-dpr(lib-flexible库)
+font-dpr($font-size)
+  @media (-webkit-min-device-pixel-ratio: 1.5),(min-device-pixel-ratio: 1.5)
+    font-size: $font-size*1.5
+  @media (-webkit-min-device-pixel-ratio: 2),(min-device-pixel-ratio: 2)
+    font-size: $font-size*2
+  @media (-webkit-min-device-pixel-ratio: 3),(min-device-pixel-ratio: 3)
+    font-size: $font-size*3
+
+// 使用时：用font-dpr() 代替font-size属性 ，font-dpr()中字体大小为 dpr==1 时的文字大小
+
+
+// 对不同dpr设备上不同的背景图，用图片命名后缀区分
+bg-image($url)
+  background-image: url($url + "@2x.png")
+  @media (-webkit-min-device-pixel-ratio: 3),(min-device-pixel-ratio: 3)
+    background-image: url($url + "@3x.png")

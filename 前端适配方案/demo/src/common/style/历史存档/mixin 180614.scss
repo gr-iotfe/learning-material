@@ -1,0 +1,130 @@
+@mixin border-top-1px($color) {
+  position: relative;
+
+  &:after {
+    display: block;
+    position: absolute;
+    left: 0;
+    // 下边框使用bottom: 0 ,上边框使用top: 0
+    top: 0;
+    width: 100%;
+    border-top: 1px solid $color;
+    content: ' ';
+  }
+}
+@mixin border-bottom-1px($color) {
+  position: relative;
+
+  &:after {
+    display: block;
+    position: absolute;
+    left: 0;
+    // 下边框使用bottom: 0 ,上边框使用top: 0
+    bottom: 0;
+    width: 100%;
+    border-top: 1px solid $color;
+    content: ' ';
+  }
+}
+
+// 用于取消一像素效果
+@mixin border-none() {
+  &:after {
+    display: none;
+  }
+}
+
+// 判断不同的dpr进行竖直方向上的缩放
+@media (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5) {
+  .border-top-1px, .border-bottom-1px {
+    &::after {
+      -webkit-transform: scaleY(0.7);
+      transform: scaleY(0.7);
+    }
+  }
+}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-device-pixel-ratio: 2) {
+  .border-top-1px, .border-bottom-1px {
+    &::after {
+      border-color: red;
+      -webkit-transform: scaleY(0.5);
+      transform: scaleY(0.5);
+    }
+  }
+}
+
+@media (-webkit-min-device-pixel-ratio: 3), (min-device-pixel-ratio: 3) {
+  .border-top-1px, .border-bottom-1px {
+    &::after {
+      border-color: red;
+      -webkit-transform: scaleY(0.3);
+      transform: scaleY(0.3);
+    }
+  }
+}
+
+// 注：使用此1px边框需要给应用到的那个DOM元素加 .border-top-1px 或 .border-bottom-1px 这个class名
+// 例如：<li class='item-li border-top-1px'>message</li>
+// 在css中写： .item-li { border-top-1px(red) }
+// 对某个特殊元素取消此样式：.item-li { border-none() }
+
+// 对文字字号的适配 
+@mixin font-size($font-size) {
+  @media screen and (max-device-width: 290px) {
+    font-size: round($font-size * 0.70);
+  }
+  @media screen and (max-device-width: 306px) and (min-device-width: 291px) {
+    font-size: round($font-size * 0.74);
+  }
+  @media screen and (max-device-width: 323px) and (min-device-width: 307px) {
+    font-size: round($font-size * 0.78);
+  }
+  @media screen and (max-device-width: 340px) and (min-device-width: 324px) {
+    font-size: round($font-size * 0.82);
+  }
+  @media screen and (max-device-width: 356px) and (min-device-width: 341px) {
+    font-size: round($font-size * 0.86);
+  }
+  @media screen and (max-device-width: 372px) and (min-device-width: 357px) {
+    font-size: round($font-size * 0.90);
+  }
+  @media screen and (max-device-width: 389px) and (min-device-width: 373px) {
+    font-size: round($font-size * 0.94);
+  }
+  @media screen and (max-device-width: 406px) and (min-device-width: 390px) {
+    font-size: round($font-size * 0.98);
+  }
+  @media screen and (max-device-width: 422px) and (min-device-width: 407px) {
+    font-size: round($font-size);
+  }
+  @media screen and (max-device-width: 439px) and (min-device-width: 423px) {
+    font-size: round($font-size * 1.02);
+  }
+  @media screen and (max-device-width: 455px) and (min-device-width: 440px) {
+    font-size: round($font-size * 1.06);
+  }
+  @media screen and (max-device-width: 472px) and (min-device-width: 456px) {
+    font-size: round($font-size * 1.10);
+  }
+  @media screen and (max-device-width: 488px) and (min-device-width: 473px) {
+    font-size: round($font-size * 1.14);
+  }
+  @media screen and (max-device-width: 505px) and (min-device-width: 489px) {
+    font-size: round($font-size * 1.18);
+  }
+  @media screen and (min-device-width: 506px) {
+    font-size: round($font-size * 1.22);
+  }
+}
+
+// 使用时：用font-size() 代替font-size属性 ，font-size()中字体大小为 dpr==1 时的文字大小
+
+// 对不同dpr设备上不同的背景图，用图片命名后缀区分
+@mixin bg-image($url) {
+  background-image: url($url+'@2x.png');
+
+  @media (-webkit-min-device-pixel-ratio: 3), (min-device-pixel-ratio: 3) {
+    background-image: url($url+'@3x.png');
+  }
+}
